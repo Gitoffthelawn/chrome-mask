@@ -4,7 +4,7 @@
   "description": "__MSG_extensionDescription__",
   "author": "SKy Schubert",
   "homepage_url": "https://github.com/skyschub/chrome-mask",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "default_locale": "en",
   "browser_specific_settings": {
     "gecko": {
