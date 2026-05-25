@@ -2,8 +2,8 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "author": "Dennis Schubert",
-  "homepage_url": "https://github.com/denschub/chrome-mask",
+  "author": "SKy Schubert",
+  "homepage_url": "https://github.com/skyschub/chrome-mask",
   "version": "8.0.0",
   "default_locale": "en",
   "browser_specific_settings": {
