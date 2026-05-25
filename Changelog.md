@@ -1,6 +1,7 @@
 # unreleased
 
 - The settings page didn't allow you to manually add hosts if you are on Firefox ESR 115. It does now.
+- Chrome Mask now spoofs some basic Client Hints usage to address the now more commonly occuring sniffs for it. More precicisely, it sets the `sec-ch-ua`, `sec-ch-ua-mobile`, and `sec-ch-ua-platform` headers - and it shims the `navigator.userAgentData` object to include `.brands`, `.mobile`, and `.platform`. This should get users past currently known instances of CH sniffing, and this can be expanded in the future.
 
 # 8.0.0
 

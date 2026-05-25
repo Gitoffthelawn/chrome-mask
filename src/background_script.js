@@ -51,6 +51,19 @@ function onBeforeSendHeadersHandler(details) {
     }
   }
 
+  // Note to future me: This will break if Firefox ever starts sending CH headers
+  // on its own, because then we'd have all headers twice. In that case, it might
+  // be better just to convert the entire function to build a Set of headers, maybe,
+  // but I'll leave that rabbithole alone for now.
+  details.requestHeaders.push(
+    {
+      name: "sec-ch-ua",
+      value: `"Chromium";v="${chromeUAStringManager.getChromeVersion()}", "Google Chrome";v="${chromeUAStringManager.getChromeVersion()}", "Not/A)Brand";v="99"`,
+    },
+    { name: "sec-ch-ua-mobile", value: chromeUAStringManager.getCHMobile() },
+    { name: "sec-ch-ua-platform", value: chromeUAStringManager.getCHPlatform() },
+  );
+
   return { requestHeaders: details.requestHeaders };
 }
 

@@ -70,12 +70,20 @@ class ChromeUAStringManager {
   #remoteUrl = "https://chrome-mask-remote-storage.0b101010.services/current-chrome-major-version.txt";
 
   // This are just fallbacks in the case we somehow have to make a request before everything is loaded.
+  #currentChromeVersion = "148";
   #currentPlatform = "win";
-  #currentUAString = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36`;
+  #currentUAString = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36`;
 
   async init() {
     const platformInfo = await browser.runtime.getPlatformInfo();
     this.#currentPlatform = platformInfo.os;
+
+    // On Linux, we actually spoof as Chrome-on-Windows. Some sites block Linux
+    // specifically, so this is one general way to get around that. We can
+    // narrow it durn further for the in-product intervention if needed.
+    if (this.#currentPlatform == "linux") {
+      this.#currentPlatform = "win";
+    }
 
     await this.buildUAStringFromStorage();
 
@@ -88,36 +96,43 @@ class ChromeUAStringManager {
     await this.maybeRefreshRemote();
   }
 
+  getChromeVersion() {
+    return this.#currentChromeVersion;
+  }
+
+  getCHMobile() {
+    if (this.#currentPlatform == "android") {
+      return "?1";
+    }
+    return "?0";
+  }
+
+  getCHPlatform() {
+    return {
+      win: "Windows",
+      mac: "macOS",
+      android: "Android",
+    }[this.#currentPlatform];
+  }
+
   getUAString() {
     return this.#currentUAString;
   }
 
   async buildUAStringFromStorage() {
-    let currentChromeVersion = "142";
-
     const storedMajorVersion = (await browser.storage.local.get("remoteStorageVersionNumber"))
       ?.remoteStorageVersionNumber?.version;
     if (storedMajorVersion) {
-      currentChromeVersion = storedMajorVersion;
-    }
-
-    let targetPlatform = this.#currentPlatform;
-
-    // On Linux, we actually spoof as Chrome-on-Windows. Some sites block Linux
-    // specifically, so this is one general way to get around that. We can
-    // narrow it durn further for the in-product intervention if needed.
-    if (targetPlatform == "linux") {
-      targetPlatform = "win";
+      this.#currentChromeVersion = storedMajorVersion;
     }
 
     const ChromeUAStrings = {
-      win: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${currentChromeVersion}.0.0.0 Safari/537.36`,
-      mac: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${currentChromeVersion}.0.0.0 Safari/537.36`,
-      linux: `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${currentChromeVersion}.0.0.0 Safari/537.36`,
-      android: `Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${currentChromeVersion}.0.0.0 Mobile Safari/537.36`,
+      win: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${this.#currentChromeVersion}.0.0.0 Safari/537.36`,
+      mac: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${this.#currentChromeVersion}.0.0.0 Safari/537.36`,
+      android: `Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${this.#currentChromeVersion}.0.0.0 Mobile Safari/537.36`,
     };
 
-    this.#currentUAString = ChromeUAStrings[targetPlatform];
+    this.#currentUAString = ChromeUAStrings[this.#currentPlatform];
   }
 
   async maybeRefreshRemote() {
