@@ -17,13 +17,14 @@ async function initUi() {
 }
 
 function tryValidateHostname(input) {
-  if (URL.canParse(input)) {
-    return URL.parse(input).hostname;
-  }
+  // [ToDo] whenever ESR 115 is finally dead, use .parse() again.
+  try {
+    return new URL(input).hostname;
+  } catch {}
 
-  if (URL.canParse(`https://${input}`)) {
-    return URL.parse(`https://${input}`).hostname;
-  }
+  try {
+    return new URL(`https://${input}`).hostname;
+  } catch {}
 
   return undefined;
 }

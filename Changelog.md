@@ -1,3 +1,7 @@
+# unreleased
+
+- The settings page didn't allow you to manually add hosts if you are on Firefox ESR 115. It does now.
+
 # 8.0.0
 
 The addon now removes `window.InstallTrigger` to pass very common patterns like `if ("InstallTrigger" in window)` or `if (typeof window.InstallTrigger !== "undefined")`.
