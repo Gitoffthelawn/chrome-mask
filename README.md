@@ -10,7 +10,7 @@ There are a lot of generic "User Agent spoof" extensions. However, this extensio
 
 - Unlike some extensions with outdated version numbers and UA strings, this extension automatically updates the Chrome version it pretends to be. It does that by querying a simple API every 24 hours, check [the privacy policy](./Privacy.md) for a bit more details.
 - You don't have to pick the correct Operating System manually; this extension does it for you.
-- This extension also shims a few additional JavaScript attributes, like `navigator.vendor` or the global `chrome` object, to pass common browser checks.
+- This extension also shims a few additional JavaScript attributes, like `navigator.vendor` or the global `chrome` object, to pass common browser checks. Starting with Version 9, the extension also shims some basic Client Hints data: the `navigator.userAgentData.{brands,mobile,platform}` properties; plus the `sec-ch-ua`, `sec-ch-ua-mobile`, and `sec-ch-ua-mobile` headers.
 
 ## What this isn't doing
 
