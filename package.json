@@ -2,7 +2,7 @@
   "name": "chrome-mask",
   "version": "9.0.0",
   "description": "Makes Firefox wear a mask to look like Chrome.",
-  "author": "Sky Schubert <mail@overengineer.dev>",
+  "author": "Sky Schubert <sky@overengineer.dev>",
   "license": "MIT",
   "private": true,
   "type": "module",
@@ -15,10 +15,10 @@
     "webext-lint": "npx web-ext lint -s src/"
   },
   "devDependencies": {
-    "prettier": "3.8.3",
-    "web-ext": "10.2.0"
+    "prettier": "3.9.5",
+    "web-ext": "10.5.0"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.1053.0"
+    "@aws-sdk/client-s3": "3.1085.0"
   }
 }
