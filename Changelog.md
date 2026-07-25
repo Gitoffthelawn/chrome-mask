@@ -1,3 +1,7 @@
+# 10.0.0
+
+The preferences now allow you to export a list of sites where you have enabled Chrome Mask, and you can also import the same (or another) list if you want. Additionally, there's a "Remove all sites" button for your convenience! All of that was contributed by [@changhuapeng](https://github.com/changhuapeng), thank you very much for your repeated contributions!
+
 # 9.0.0
 
 - The settings page didn't allow you to manually add hosts if you are on Firefox ESR 115. It does now.

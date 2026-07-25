@@ -1,6 +1,6 @@
 {
   "name": "chrome-mask",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "Makes Firefox wear a mask to look like Chrome.",
   "author": "Sky Schubert <sky@overengineer.dev>",
   "license": "MIT",
