@@ -161,12 +161,14 @@ function setupManageSites() {
   manageSitesExportButton.addEventListener("click", async () => {
     const fileContent = [...enabledHostnames.get_values()].sort((a, b) => a.localeCompare(b)).join("\n");
     const blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    browser.downloads.download({
-      url: url,
-      filename: getExportDefaultFileName(),
-      saveAs: true,
-    });
+
+    // This is a bit hacky, but using a link with the download attribute
+    // (see https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a#download)
+    // removes the need for the `browser.downloads` API and related permissions.
+    const downloadLink = document.createElement("a");
+    downloadLink.download = getExportDefaultFileName();
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.click();
   });
 
   manageSitesClearButton.addEventListener("click", async () => {

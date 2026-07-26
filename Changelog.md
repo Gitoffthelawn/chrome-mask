@@ -1,3 +1,7 @@
+# 10.1.0
+
+The last version added a button to export a list of sites where Chrome Mask is enabled. Apparently, people lost their mind over the added `downloads` permissions to make that happen - so I found a creative workaround to get rid of that permissions. There are no functional changes compared to `v10.0.0`.
+
 # 10.0.0
 
 The preferences now allow you to export a list of sites where you have enabled Chrome Mask, and you can also import the same (or another) list if you want. Additionally, there's a "Remove all sites" button for your convenience! All of that was contributed by [@changhuapeng](https://github.com/changhuapeng), thank you very much for your repeated contributions!
